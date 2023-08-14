@@ -1,6 +1,6 @@
-import React, { useEffect , useMemo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect , useState } from 'react';
 import { Itask } from '../types/task'
+import { useAppSelector , useAppDispatch } from '../app/hooks';
 import {FILTER_TASKS} from '../types/filters'
 
 import { fetchTasks, selectAllTasks, deleteTaskFromFirebase, toggleTaskInFirebase, updateTaskInFirebase} from '../app/todosSlice'
@@ -11,8 +11,8 @@ const TodoList = () => {
     const [filterTask , setFilterTask] = useState<string>(FILTER_TASKS.all)
 
 
-    const dispatch = useDispatch();
-    const tasks = useSelector(selectAllTasks);
+    const dispatch = useAppDispatch();
+    const tasks = useAppSelector(selectAllTasks);
     
     const filteredTasks = filterTask === FILTER_TASKS.all
     ? tasks

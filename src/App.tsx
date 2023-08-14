@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch} from 'react-redux';
+import React, { useState } from 'react';
+import { useAppDispatch } from './app/hooks';
 import {addTaskToFirebase } from './app/todosSlice';
 import TodoList from './components/TodoList';
 import { Itask } from './types/task';
@@ -8,7 +8,7 @@ import { Itask } from './types/task';
 const App: React.FC = () => {
 
   const [newTaskText, setNewTaskText] = useState<string>('');
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
 
   const handleAddTask = () => {

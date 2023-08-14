@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Itask } from '../types/task';
-import { AppThunk } from './store';
+import { RootState } from './store';
 import {
     collection,
     addDoc,
@@ -55,7 +55,7 @@ export const { setTasks, addTask, updateTask, deleteTask , toggleTask } = tasksS
 
 export default tasksSlice.reducer;
 
-export const fetchTasks = (): AppThunk => async (dispatch) => {
+export const fetchTasks = () => async (dispatch : any) => {
     try {
       const tasksCollection = await getDocs(collection(db, 'tasks'));
       const tasks = tasksCollection.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Itask));
@@ -65,7 +65,7 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
     }
   };
 
-  export const addTaskToFirebase = (task: Itask): AppThunk => async (dispatch) => {
+  export const addTaskToFirebase = (task: Itask) => async (dispatch : any) => {
     try {
       const docRef = await addDoc(collection(db, 'tasks'), task);
       dispatch(addTask({ ...task, id: docRef.id }));
@@ -75,7 +75,7 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
   };
   
 
-  export const updateTaskInFirebase = (task: Itask): AppThunk => async (dispatch) => {
+  export const updateTaskInFirebase = (task: Itask) => async (dispatch : any) => {
     try {
       await setDoc(doc(db, 'tasks', task.id), task);
       dispatch(updateTask(task));
@@ -85,10 +85,10 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
   };
 
   
-  export const toggleTaskInFirebase = (taskId: string): AppThunk => async (dispatch, getState) => {
+  export const toggleTaskInFirebase = (taskId: string) => async (dispatch : any, getState : any) => {
     try {
       const state = getState();
-      const task = state.todos.todos.find((task) => task.id === taskId);
+      const task = state.todos.todos.find((task : Itask) => task.id === taskId);
   
       if (task) {
         const updatedTask = { ...task, isCompleted: !task.isCompleted };
@@ -101,7 +101,7 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
   };
 
 
-  export const deleteTaskFromFirebase = (taskId: string): AppThunk => async (dispatch) => {
+  export const deleteTaskFromFirebase = (taskId: string) => async (dispatch : any) => {
     try {
       await deleteDoc(doc(db, 'tasks', taskId));
       dispatch(deleteTask(taskId));
@@ -114,4 +114,4 @@ export const fetchTasks = (): AppThunk => async (dispatch) => {
 
 
 // Selectors
-export const selectAllTasks = (state: any) => state.todos.todos
+export const selectAllTasks = (state : RootState) => state.todos.todos

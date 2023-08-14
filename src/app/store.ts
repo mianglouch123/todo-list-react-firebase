@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore} from '@reduxjs/toolkit';
 import todosSlice from './todosSlice';
 
 export const store = configureStore({
@@ -8,7 +8,6 @@ export const store = configureStore({
 });
 
 export type AppDispatch = typeof store.dispatch;
-export type AppThunk = ThunkAction<void, RootState, unknown, Action<string>>;
 export type RootState = ReturnType<typeof store.getState>;
 
 
